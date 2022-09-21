@@ -27,6 +27,7 @@ jobs:
         cd script
         python updata_arkchar_data.py
         mv char_list.json ../char_list.json
+        rm -r char_list.json
 
     - name: Deploy
       uses: s0/git-publish-subdir-action@develop
