@@ -1,0 +1,37 @@
+name: updata_arkchar_data
+
+on: 
+  # push:
+  #   branches: 
+  #    - master
+  schedule:
+    - cron: "0 8 * * *"
+  watch:
+    types: [started]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    if: github.event.repository.owner.id == github.event.sender.id  # 自己点的 start
+    steps:
+    - name: Checkout
+      uses: actions/checkout@master
+
+    - name: Set up Python
+      uses: actions/setup-python@v1
+      with:
+        python-version: 3.9
+
+    - name: start
+      run: |
+        cd script
+        python updata_arkchar_data.py
+        mv char_list.json ../char_list.json
+
+    - name: Deploy
+      uses: s0/git-publish-subdir-action@develop
+      env:
+        REPO: self
+        BRANCH: master
+        FOLDER: public
+        GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
