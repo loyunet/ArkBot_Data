@@ -25,6 +25,7 @@ jobs:
     - name: start
       run: |
         cd script
+        pip install -r updata_arkchar_data_requirements.txt
         python updata_arkchar_data.py
         mv char_list.json ../char_list.json
         rm -r char_list.json
