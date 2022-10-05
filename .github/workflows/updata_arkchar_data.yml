@@ -6,13 +6,10 @@ on:
   #    - master
   schedule:
     - cron: "0 8 * * *"
-  watch:
-    types: [started]
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    if: github.event.repository.owner.id == github.event.sender.id  # 自己点的 start
     steps:
     - name: Checkout
       uses: actions/checkout@master
@@ -27,8 +24,6 @@ jobs:
         cd script
         pip install -r updata_arkchar_data_requirements.txt
         python updata_arkchar_data.py
-        mv char_list.json ../char_list.json
-        rm -r char_list.json
 
     - name: Deploy
       uses: s0/git-publish-subdir-action@develop

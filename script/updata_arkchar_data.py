@@ -6,7 +6,8 @@ from urllib.parse import quote
 
 arkdata = json.loads(requests.get(
     'https://ak-conf.hypergryph.com/config/prod/official/Android/version').text)['clientVersion']
-localdata = json.loads(requests.get('https://raw.githubusercontent.com/loyunet/ArkBot_Data/master/char_list.json').text)['ark_clientVersion']
+localdata = json.loads(requests.get(
+    'https://cdn1.tianli0.top/gh/loyunet/ArkBot_Data@master/char_list.json').text)['ark_clientVersion']
 if arkdata != localdata:
     print('数据过时，开始更新')
     char_response = requests.get(
@@ -17,6 +18,7 @@ if arkdata != localdata:
     returndata = {}
     returndata['ark_clientVersion'] = arkdata
     returndata['data'] = {}
+    num = 0
     for i in char_re:
         if i == '阿米娅（近卫）':
             i = '阿米娅(近卫)'
@@ -25,9 +27,10 @@ if arkdata != localdata:
         data_re = re.findall(
             r'</p><div id="voice-data-root" data-voice-key="(.*?)" data-voice-base="', data_response.text)[0]
         returndata['data'][i] = data_re
-        print(i+'：OK')
+        num = num + 1
+        print(f"{i}：OK({num}/{char_re_num})")
     returnjson = json.dumps(returndata, ensure_ascii=False)
-    file = open('char_list.json', 'w', encoding='utf-8')
+    file = open('../char_list.json', 'w', encoding='utf-8')
     file.write(returnjson)
     file.close()
 else:
