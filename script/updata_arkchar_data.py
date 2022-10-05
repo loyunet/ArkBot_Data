@@ -7,7 +7,7 @@ from urllib.parse import quote
 arkdata = json.loads(requests.get(
     'https://ak-conf.hypergryph.com/config/prod/official/Android/version').text)['clientVersion']
 localdata = json.loads(requests.get(
-    'https://cdn1.tianli0.top/gh/loyunet/ArkBot_Data@master/char_list.json').text)['ark_clientVersion']
+    'https://raw.githubusercontent.com/loyunet/ArkBot_Data/master/char_list.json').text)['ark_clientVersion']
 if arkdata != localdata:
     print('数据过时，开始更新')
     char_response = requests.get(
