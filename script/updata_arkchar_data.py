@@ -5,9 +5,9 @@ import json
 from urllib.parse import quote
 
 arkdata = json.loads(requests.get(
-    'https://ak-conf.hypergryph.com/config/prod/official/Android/version').text)['clientVersion']
+    'https://ak-conf.hypergryph.com/config/prod/official/Android/version').text)['resVersion']
 localdata = json.loads(requests.get(
-    'https://raw.githubusercontent.com/loyunet/ArkBot_Data/master/char_list.json').text)['ark_clientVersion']
+    'https://raw.githubusercontent.com/loyunet/ArkBot_Data/master/char_list.json').text)['ark_resVersion']
 if arkdata != localdata:
     print('数据过时，开始更新')
     char_response = requests.get(
@@ -16,7 +16,7 @@ if arkdata != localdata:
         r'<p class="handbook-item-name">(.*?)</p>', char_response.text)
     char_re_num = len(char_re)
     returndata = {}
-    returndata['ark_clientVersion'] = arkdata
+    returndata['ark_resVersion'] = arkdata
     returndata['data'] = {}
     num = 0
     for i in char_re:
